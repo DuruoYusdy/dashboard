@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="clear row">
+        <div class="col-md-6">
+        <h3 class="animated bounce"><i class="iconfont icon-shunt"></i>快发波次监控</h3>
+            {%  for servername in url_tag %}
+                {% if 'suzhou' not in servername %}
+                 <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                     <div style="height: 90px" class="ibox-content navy" id={{ servername }}>
+                        <i style="color: snow" id="i{{ servername }}" class="fa fa-2x fa-gear mymove"></i>
+                        <h4 class="text-right" style="color: snow">{{ servername.replace('tag_','') }}
+                            <br><input id="b{{ servername }}"  onchange="change(id)" class="mui-switch mui-switch-animbg text-right" type="checkbox" checked>
+                        </h4>
+
+                    </div>
+                 </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-md-6">
+        <h3 class="animated bounce"><i class="iconfont icon-shunt"></i>商品服务监控</h3>
+             {%  for servername in url_sku %}
+                  {% if 'suzhou' not in servername %}
+                 <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                    <div style="height: 90px" class="ibox-content navy" id={{ servername }}>
+                        <i style="color: snow" id="i{{ servername }}" class="fa fa-2x fa-gear mymove"></i>
+                        <h4 class="text-right" style="color: snow">{{ servername.replace('sku_','') }}
+                            <br><input id="b{{ servername }}" onchange="change(id)" class="mui-switch mui-switch-animbg text-right" type="checkbox" checked >
+                        </h4>
+                    </div>
+                 </div>
+                 {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

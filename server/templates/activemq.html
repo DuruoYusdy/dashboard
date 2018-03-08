@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="wrapper wrapper-content animated fadeInRight">
+
+     <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>产线ActiveMQ
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                   {% include "charts/cx_activemq.html" %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>云仓ActiveMQ</h5>
+                </div>
+                <div class="ibox-content">
+                    {% include "charts/yc_activemq.html" %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>御城河CallBack</h5>
+                </div>
+                <div class="ibox-content">
+                     {% include "charts/callback_aq.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

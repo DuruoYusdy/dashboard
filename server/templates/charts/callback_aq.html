@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- 引入 echarts.js -->
+    <script src="../../static/echarts.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main3" style="width: 100%;height:250px"></div>
+
+    <script type="text/javascript">
+        var myChart3 = echarts.init(document.getElementById('main3'));
+        var option3 = {
+            tooltip: {},
+            legend: {
+                data:['NumOfPend','NumOfCos','MesEnq','MesDeq'],
+                 selected: {
+                    'MesEnq': false,
+                    'MesDeq': false
+                }
+            },
+
+            xAxis: [{
+                data: [],
+                "axisLabel":{
+                    textStyle:{ fontSize:10 },
+                    show: true,
+                    interval: 0,
+                    inside: false,
+                    rotate: 40,
+                    margin: 0,
+                    formatter: null,
+                    showMinLabel: null,
+                    showMaxLabel: null
+                }
+            }],
+            yAxis:{
+            },
+            series: [{
+                name: 'NumOfPend',
+                type: 'bar',
+                data: []
+            },{
+                name: 'NumOfCos',
+                type: 'bar',
+                data: []
+            },{
+                name: 'MesEnq',
+                type: 'line',
+                data: []
+            }, {
+                name: 'MesDeq',
+                type: 'line',
+                data: []
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart3.setOption(option3);
+
+
+
+
+        myChart3.showLoading();
+
+        var update_mychart3 = function (data) {
+            var vava3 = [];
+            var NumOfPend3 = [];
+            var NumOfCos3 = [];
+            var MesEnq3 = [];
+            var MesDeq3 = [];
+            for(var i in data){
+                vava3.push(data[i]['name']);
+                NumOfPend3.push(data[i]['pend_num']);
+                NumOfCos3.push(data[i]['cos_num']);
+                MesEnq3.push(data[i]['mess_enq']);
+                MesDeq3.push(data[i]['mess_deq'])
+            }
+            myChart3.hideLoading();
+
+            myChart3.setOption({
+                xAxis: {
+                    data: vava3
+                },
+                series: [{
+                    name: 'NumOfPend',
+                    type: 'bar',
+                    barWidth : 30,
+		    markLine:{
+                       data:[[
+                                {
+                                    name:'     达到告警',
+                                    coord:[0, 1000]
+                                },{
+                                    coord:[1, 1000]
+                                }
+                       ]]
+                    },
+                    data: NumOfPend3
+                }, {
+                    name: 'NumOfCos',
+                    type: 'bar',
+                    barWidth : 30,
+                    data: NumOfCos3
+                }, {
+                    name: 'MesEnq',
+                    type: 'line',
+                    data: MesEnq3
+
+                }, {
+                    name: 'MesDeq',
+                    type: 'line',
+                    data: MesDeq3
+
+                }]
+                });
+
+        };
+
+        var timeTicket = setInterval(function () {
+            $.get('/api/ychcallback').done(update_mychart3);
+        },60000);
+
+    </script>
+</body>
+</html>

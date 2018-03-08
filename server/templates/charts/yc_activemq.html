@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- 引入 echarts.js -->
+    <script src="../../static/echarts.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main2" style="width: 100%;height:250px"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart2 = echarts.init(document.getElementById('main2'));
+
+        // 指定图表的配置项和数据
+        var option2 = {
+            grid: {
+{#                bottom:'15%'#}
+            },
+            tooltip: {},
+            legend: {
+                data:['NumOfPend','NumOfCos','MesEnq','MesDeq'],
+                selected: {
+                    'MesEnq': false,
+                    'MesDeq': false
+                }
+            },
+
+            xAxis: [{
+                data: [],
+                "type":"category",
+                "axisLabel":{
+                    textStyle:{ fontSize:10 },
+                    show: true,
+                    interval: 0,
+                    inside: false,
+                    rotate: 40,
+                    margin: 8,
+                    formatter: null,
+                    showMinLabel: null,
+                    showMaxLabel: null
+                }
+            }],
+            yAxis: {},
+            series: [{
+                name: 'NumOfPend',
+                type: 'bar',
+                data: []
+            },{
+                name: 'NumOfCos',
+                type: 'bar',
+                data: []
+            },{
+                name: 'MesEnq',
+                type: 'line',
+                data: []
+            }, {
+                name: 'MesDeq',
+                type: 'line',
+                data: []
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart2.setOption(option2);
+
+        myChart2.showLoading();
+
+        var update_mychart2 = function (data) {
+            var vava2 = [];
+            var NumOfPend2 = [];
+            var NumOfCos2 = [];
+            var MesEnq2 = [];
+            var MesDeq2 = [];
+            for(var i in data){
+                vava2.push(data[i]['name'].replace('\n\n\n',''));
+                NumOfPend2.push(data[i]['pend_num']);
+                NumOfCos2.push(data[i]['cos_num']);
+                MesEnq2.push(data[i]['mess_enq']);
+                MesDeq2.push(data[i]['mess_deq'])
+            }
+            myChart2.hideLoading();
+            myChart2.setOption({
+                xAxis: {
+                    data: vava2
+                },
+                series: [{
+                    name: 'NumOfPend',
+                    type: 'bar',
+ 		    markLine:{
+                       data:[[
+                                {
+                                    name:'     达到告警',
+                                    coord:[0, 1000]
+                                },{
+                                    coord:[1, 1000]
+                                }
+                       ]]
+                    },
+                    data: NumOfPend2
+                }, {
+                    name: 'NumOfCos',
+                    type: 'bar',
+		    markLine:{
+                       data:[[
+                                {
+                                    name:'           cos正常值',
+                                    coord:[0, 1]
+                                },{
+                                    coord:[13, 1]
+                                }
+                       ]]
+                    },
+                    data: NumOfCos2
+                }, {
+                    name: 'MesEnq',
+                    type: 'line',
+                    data: MesEnq2
+                }, {
+                    name: 'MesDeq',
+                    type: 'line',
+                    data: MesDeq2
+                }]
+                });
+
+        };
+
+        var timeTicket = setInterval(function () {
+            $.get('/api/yc_activemq').done(update_mychart2);
+        },60000);
+
+
+    </script>
+</body>
+</html>
