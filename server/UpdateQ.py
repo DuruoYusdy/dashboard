@@ -4,7 +4,7 @@ from .model import pourQStatu
 from flask import jsonify
 
 def update_cx_q():
-    r3 = requests.get('http://activemq.fcgylapp.cn/admin/queues.jsp', auth=('admin', 'admin'))
+    r3 = requests.get('http://aq***/admin/***.jsp', auth=('***', '***'))
     soup = BeautifulSoup(r3.text, 'html5lib')
     data_list = []
     for tab in soup.findAll('table', id='queues'):
@@ -42,7 +42,7 @@ def update_cx_q():
     return jsonify(data_list)
 
 def update_yc_q():
-    r3 = requests.get('http://activemq.yuncang.fcgylapp.cn/admin/queues.jsp', auth=('admin', 'admin'))
+    r3 = requests.get('http://*', auth=('***', '***'))
     soup = BeautifulSoup(r3.text, 'html5lib')
     data_list = []
     for tab in soup.findAll('table', id='queues'):
@@ -72,7 +72,7 @@ def update_yc_q():
     return jsonify(data_list)
 
 def update_ych_q():
-    r3 = requests.get('http://ychcallback.fcgylapp.cn/admin/queues.jsp', auth=('admin', 'admin'))
+    r3 = requests.get('http://***', auth=('*', '*'))
     soup = BeautifulSoup(r3.text, 'html5lib')
     data_list = []
     for tab in soup.findAll('table', id='queues'):

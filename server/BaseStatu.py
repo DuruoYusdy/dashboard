@@ -4,10 +4,6 @@
 import paramiko
 import os,subprocess,commands
 
-ECS71  = '121.199.178.71'
-ECS111 = '121.41.179.111'
-ECS125 = '120.26.58.125'
-ECS43  = '121.41.177.43'
 
 private_key = paramiko.RSAKey.from_private_key_file('/home/tomcat/.ssh/id_rsa')
 ssh = paramiko.SSHClient()
